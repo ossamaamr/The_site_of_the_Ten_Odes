@@ -266,18 +266,13 @@
             font-size: 0.85rem;
         }
 
-        /* ==========================================================================
-           🎯 استعلامات الوسائط (Media Queries) الخاصة بالهواتف والشاشات الصغيرة
-           ========================================================================== */
-        
-        /* للهواتف والأجهزة اللوحية الصغيرة (أقل من 768 بكسل) */
+        /* استعلامات الوسائط للهواتف */
         @media (max-width: 768px) {
             header {
                 padding: 35px 15px;
             }
             
             .main-container {
-                /* إجبار المربعات على الاصطفاف كعمود واحد مريح جداً للتصفح بالهاتف */
                 grid-template-columns: 1fr; 
                 gap: 20px;
                 margin: 25px auto;
@@ -286,25 +281,24 @@
 
             .card {
                 padding: 25px 18px;
-                min-height: auto; /* ترك الارتفاع يتحدد طبيعياً بحسب النص */
+                min-height: auto;
             }
 
             .card h2 {
-                font-size: 1.75rem; /* تصغير طفيف متناسق لعنوان الشاعر */
+                font-size: 1.75rem;
             }
 
             .card p {
-                font-size: 1.1rem; /* مواءمة حجم الخط الخاص بالأبيات الشعرية */
+                font-size: 1.1rem;
                 margin-bottom: 18px;
             }
 
-            /* توسيع مساحة المودال لملء الشاشة على الهاتف لسهولة القراءة */
             .pdf-modal {
                 padding: 10px; 
             }
 
             .pdf-container {
-                height: 84vh; /* زيادة الارتفاع الرأسي لملف الـ PDF على الهاتف */
+                height: 84vh;
                 border-radius: 8px;
             }
 
@@ -318,7 +312,6 @@
             }
         }
 
-        /* للهواتف الصغيرة جداً (أقل من 400 بكسل - مثل شاشات آيفون الصغيرة) */
         @media (max-width: 400px) {
             header h1 {
                 font-size: 1.6rem;
@@ -334,7 +327,7 @@
             }
 
             .view-btn {
-                width: 100%; /* جعل الزر يأخذ عرض المربع بالكامل ليسهل لمسه بالإصبع */
+                width: 100%;
                 box-sizing: border-box;
                 text-align: center;
             }
@@ -364,7 +357,7 @@
                 <h2>طرفة بن العبد</h2>
                 <p>"لِخَولةَ أَطلالٌ بِبُرقَةِ ثَهمَدِ <br> تَلوحُ كَباقي الوَشمِ في ظاهِرِ اليَدِ"</p>
             </div>
-            <button class="view-btn" onclick="openGoogleViewer('https://docs.google.com/viewer?srcid=1J7jzhS5Mg3DpTu6ErLTVksgZuUUyxMcQ&pid=explorer&efmt=embed', 'معلقة طرفة بن العبد البكري')">فتح المعلقة في الموقع</button>
+            <button class="view-btn" onclick="openGoogleViewer('https://drive.google.com/file/d/1J7jzhS5Mg3DpTu6ErLTVksgZuUUyxMcQ/preview', 'معلقة طرفة بن العبد البكري')">فتح المعلقة في الموقع</button>
         </div>
 
         <div class="card disabled-card">
@@ -381,7 +374,7 @@
                 <h2>لبيد بن ربيعة</h2>
                 <p>"عَفَتِ الدِّيارُ مَحَلُّهَا فَمُقَامُهَا <br> بِمِنًى تَأَبَّدَ غَوْلُهَا فَرِجَامُهَا"</p>
             </div>
-            <button class="view-btn" onclick="openGoogleViewer('https://docs.google.com/viewer?srcid=1HXguIhIJBbYIZplennDC_zGgU9K-r7OQ&pid=explorer&efmt=embed', 'معلقة لبيد بن ربيعة العامري')">فتح المعلقة في الموقع</button>
+            <button class="view-btn" onclick="openGoogleViewer('https://drive.google.com/file/d/1HXguIhIJBbYIZplennDC_zGgU9K-r7OQ/preview', 'معلقة لبيد بن ربيعة العامري')">فتح المعلقة في الموقع</button>
         </div>
 
         <div class="card disabled-card">
