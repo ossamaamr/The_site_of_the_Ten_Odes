@@ -1,744 +1,1102 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ديوان المعلقات السبع | أسامة بن عمرو</title>
-    <link href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cairo:wght@300;400;600;700;800&family=Scheherazade+New:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --gold: #D4AF37;
-            --gold-light: #f1d37a;
-            --gold-dark: #B8860B;
-            --dark-main: #0a0a0a;
-            --glass: rgba(255, 255, 255, 0.05);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --error: #ff4444;
-            --success: #00C851;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ديوان الحماسة — المعلقات السبع، أمهات القصائد العربية">
+  <title>ديوان الحماسة | المعلقات السبع</title>
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Cairo:wght@300;400;600;700&family=Scheherazade+New:wght@400;500;700&display=swap" rel="stylesheet">
 
-        body {
-            font-family: 'Amiri', serif;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a1110 50%, #0f0f0f 100%);
-            color: #fff;
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-        }
+  <style>
+    /* ─────────── Custom Properties ─────────── */
+    :root {
+      --gold:        #C9A84C;
+      --gold-bright: #E8C96A;
+      --gold-dim:    #8A6F2E;
+      --gold-glow:   rgba(201,168,76,.18);
+      --gold-line:   rgba(201,168,76,.25);
+      --bg-void:     #06060A;
+      --bg-surface:  #0E0D14;
+      --bg-card:     rgba(255,255,255,.028);
+      --bg-hover:    rgba(255,255,255,.05);
+      --text-main:   #EDE8D5;
+      --text-muted:  #7A7567;
+      --text-soft:   #B0A898;
+      --radius-card: 20px;
+      --radius-btn:  50px;
+      --transition:  cubic-bezier(.22,.68,0,1.2);
+    }
 
-        /* خلفية متحركة ذهبية */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: 
-                radial-gradient(circle at 20% 50%, rgba(212, 175, 55, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(212, 175, 55, 0.03) 0%, transparent 50%),
-                url('https://www.transparenttextures.com/patterns/dark-leather.png');
-            opacity: 0.4;
-            z-index: -1;
-            animation: bgPulse 8s ease-in-out infinite;
-        }
+    /* ─────────── Reset ─────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-        @keyframes bgPulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.5; }
-        }
+    html {
+      scroll-behavior: smooth;
+      scrollbar-width: thin;
+      scrollbar-color: var(--gold-dim) var(--bg-surface);
+    }
 
-        /* خط عربي زخرفي للعناوين */
-        .arabic-title {
-            font-family: 'Scheherazade New', serif;
-        }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--bg-surface); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
 
-        /* Header مُبهج */
-        header {
-            padding: 60px 20px 40px;
-            text-align: center;
-            border-bottom: 1px solid var(--glass-border);
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(20px);
-            position: relative;
-            overflow: hidden;
-        }
+    body {
+      font-family: 'Amiri', serif;
+      background: var(--bg-void);
+      color: var(--text-main);
+      min-height: 100svh;
+      overflow-x: hidden;
+    }
 
-        header::after {
-            content: "۞";
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 15rem;
-            color: rgba(212, 175, 55, 0.02);
-            pointer-events: none;
-            font-family: 'Scheherazade New', serif;
-        }
+    /* ─────────── Canvas Backdrop ─────────── */
+    #stage {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+    }
 
-        header h1 {
-            font-size: 3.5rem;
-            color: var(--gold);
-            margin: 0;
-            text-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
-            letter-spacing: 2px;
-            animation: titleGlow 3s ease-in-out infinite;
-        }
+    /* ─────────── Noise Texture Overlay ─────────── */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      background-image:
+        radial-gradient(ellipse 80% 60% at 15% 40%, rgba(100,60,10,.12) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 80% at 85% 70%, rgba(60,40,10,.09) 0%, transparent 55%);
+      pointer-events: none;
+    }
 
-        @keyframes titleGlow {
-            0%, 100% { text-shadow: 0 0 20px rgba(212, 175, 55, 0.3); }
-            50% { text-shadow: 0 0 40px rgba(212, 175, 55, 0.6), 0 0 60px rgba(212, 175, 55, 0.2); }
-        }
+    /* ─────────── Header ─────────── */
+    .site-header {
+      padding: clamp(50px,10vw,100px) 20px clamp(40px,7vw,70px);
+      text-align: center;
+      position: relative;
+      border-bottom: 1px solid var(--gold-line);
+      overflow: hidden;
+    }
 
-        header p {
-            font-family: 'Cairo', sans-serif;
-            color: #aaa;
-            font-size: 1.2rem;
-            margin-top: 15px;
-            font-weight: 300;
-        }
+    .site-header::after {
+      content: "";
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: min(500px,90%);
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
 
-        /* شريط ذهبي زخرفي */
-        .gold-divider {
-            width: 100px;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, var(--gold), transparent);
-            margin: 20px auto 0;
-        }
+    .header-ornament {
+      display: block;
+      font-family: 'Scheherazade New', serif;
+      font-size: clamp(2rem,6vw,4rem);
+      color: var(--gold);
+      opacity: .55;
+      margin-bottom: 16px;
+      letter-spacing: .1em;
+      animation: breathe 6s ease-in-out infinite;
+    }
 
-        /* Grid رئيسي */
-        .main-container {
-            max-width: 1300px;
-            margin: 50px auto;
-            padding: 0 25px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
+    @keyframes breathe {
+      0%,100% { opacity:.45; transform:scale(.98); }
+      50%      { opacity:.7;  transform:scale(1.02); }
+    }
 
-        /* البطاقات الاحترافية */
-        .card {
-            background: var(--glass);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--glass-border);
-            border-radius: 20px;
-            padding: 35px 30px;
-            text-align: center;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            min-height: 220px;
-            overflow: hidden;
-        }
+    .site-title {
+      font-family: 'Scheherazade New', serif;
+      font-size: clamp(2.6rem,7vw,5.2rem);
+      font-weight: 700;
+      color: var(--gold-bright);
+      line-height: 1.1;
+      letter-spacing: .04em;
+      text-shadow: 0 0 60px rgba(201,168,76,.3);
+    }
 
-        .card::before {
-            content: "";
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, transparent 60%);
-            opacity: 0;
-            transition: opacity 0.5s;
-        }
+    /* Arabesque SVG divider */
+    .divider-ornament {
+      display: block;
+      margin: 22px auto;
+      width: 260px;
+      height: 28px;
+      opacity: .6;
+    }
 
-        .card:hover:not(.disabled-card) {
-            transform: translateY(-10px) scale(1.02);
-            border-color: var(--gold);
-            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.15), 0 0 0 1px rgba(212, 175, 55, 0.3);
-        }
+    .site-subtitle {
+      font-family: 'Cairo', sans-serif;
+      color: var(--text-soft);
+      font-size: clamp(.95rem,2.5vw,1.25rem);
+      font-weight: 300;
+      letter-spacing: .06em;
+      margin-top: 4px;
+    }
 
-        .card:hover:not(.disabled-card)::before {
-            opacity: 1;
-        }
+    .site-byline {
+      font-family: 'Cairo', sans-serif;
+      color: var(--text-muted);
+      font-size: .9rem;
+      margin-top: 10px;
+    }
 
-        .card h2 {
-            font-size: 2.2rem;
-            color: var(--gold-light);
-            margin: 0 0 15px 0;
-            font-family: 'Scheherazade New', serif;
-            position: relative;
-            z-index: 1;
-        }
+    /* ─────────── Cards Grid ─────────── */
+    .grid {
+      max-width: 1380px;
+      margin: clamp(40px,8vw,80px) auto clamp(60px,10vw,120px);
+      padding: 0 clamp(16px,4vw,40px);
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%,340px),1fr));
+      gap: clamp(20px,3vw,36px);
+    }
 
-        .card p {
-            font-style: italic;
-            color: #ccc;
-            margin: 0 0 20px 0;
-            line-height: 1.8;
-            font-size: 1.3rem;
-            position: relative;
-            z-index: 1;
-        }
+    /* ─────────── Single Card ─────────── */
+    .poem-card {
+      background: var(--bg-card);
+      border: 1px solid var(--gold-line);
+      border-radius: var(--radius-card);
+      padding: clamp(28px,4vw,44px) clamp(24px,3.5vw,38px);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: relative;
+      overflow: hidden;
+      cursor: default;
 
-        .card .later-text {
-            font-family: 'Cairo', sans-serif;
-            color: #666;
-            font-size: 1rem;
-            font-style: normal;
-            background: rgba(255,255,255,0.03);
-            padding: 8px 15px;
-            border-radius: 20px;
-            display: inline-block;
-        }
+      /* GPU prep */
+      will-change: transform, box-shadow;
+      transform: translateY(0) scale(1);
+      transition:
+        transform .5s var(--transition),
+        box-shadow .5s var(--transition),
+        border-color .4s ease;
 
-        /* زر احترافي */
-        .view-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 30px;
-            background: linear-gradient(135deg, var(--gold) 0%, var(--gold-dark) 100%);
-            color: #000;
-            text-decoration: none;
-            border-radius: 50px;
-            font-family: 'Cairo', sans-serif;
-            font-weight: 700;
-            font-size: 1rem;
-            transition: all 0.3s;
-            cursor: pointer;
-            border: none;
-            width: fit-content;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
-        }
+      /* Enter animation state */
+      opacity: 0;
+      translate: 0 32px;
+    }
 
-        .view-btn:hover:not(:disabled) {
-            background: linear-gradient(135deg, #fff 0%, var(--gold-light) 100%);
-            box-shadow: 0 0 25px rgba(212, 175, 55, 0.5), 0 0 50px rgba(212, 175, 55, 0.2);
-            transform: translateY(-2px);
-        }
+    .poem-card.visible {
+      animation: cardReveal .7s var(--transition) forwards;
+    }
 
-        .view-btn:active:not(:disabled) {
-            transform: translateY(0);
-        }
+    @keyframes cardReveal {
+      to { opacity:1; translate:0 0; }
+    }
 
-        .btn-disabled {
-            background: #2a2a2a !important;
-            color: #555 !important;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
+    /* Card background shimmer on hover */
+    .poem-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(201,168,76,.07) 0%, transparent 65%);
+      opacity: 0;
+      transition: opacity .4s;
+      pointer-events: none;
+    }
 
-        .btn-disabled:hover {
-            transform: none;
-            box-shadow: none;
-        }
+    .poem-card:hover::before { opacity:1; }
 
-        /* شارة "قريباً" */
-        .coming-soon-badge {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: rgba(255, 255, 255, 0.08);
-            color: #888;
-            font-family: 'Cairo', sans-serif;
-            font-size: 0.75rem;
-            padding: 4px 12px;
-            border-radius: 20px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
+    .poem-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      border-color: rgba(201,168,76,.45);
+      box-shadow:
+        0 28px 56px rgba(0,0,0,.45),
+        0 0 0 1px rgba(201,168,76,.15),
+        0 0 40px rgba(201,168,76,.08);
+    }
 
-        /* ======== النافذة المنبثقة المحسّنة ======== */
-        .pdf-modal {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(10px);
-            z-index: 1000;
-            padding: 20px;
-            box-sizing: border-box;
-            animation: modalFadeIn 0.3s ease;
-        }
+    /* ordinal ghost number */
+    .card-index {
+      position: absolute;
+      top: 18px;
+      right: 22px;
+      font-family: 'Scheherazade New', serif;
+      font-size: 3.8rem;
+      font-weight: 700;
+      color: rgba(201,168,76,.07);
+      line-height: 1;
+      user-select: none;
+      pointer-events: none;
+    }
 
-        @keyframes modalFadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
+    .card-poet {
+      font-family: 'Scheherazade New', serif;
+      font-size: clamp(1.9rem,4vw,2.5rem);
+      color: var(--gold-bright);
+      line-height: 1.15;
+      position: relative;
+      z-index: 1;
+    }
 
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            max-width: 1100px;
-            margin: 0 auto 15px;
-            padding: 0 10px;
-        }
+    .card-verse {
+      font-family: 'Amiri', serif;
+      font-style: italic;
+      font-size: clamp(1.1rem,2.2vw,1.3rem);
+      color: var(--text-soft);
+      line-height: 2.1;
+      position: relative;
+      z-index: 1;
+      flex: 1;
+    }
 
-        .modal-title-group {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
+    /* right-border quote accent */
+    .card-verse::before {
+      content: "";
+      position: absolute;
+      top: 4px; bottom: 4px;
+      right: -20px;
+      width: 3px;
+      background: linear-gradient(180deg, transparent, var(--gold), transparent);
+      border-radius: 2px;
+      opacity: .4;
+    }
 
-        .modal-actions {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
+    /* ─────────── Buttons ─────────── */
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      position: relative;
+      z-index: 1;
+    }
 
-        .close-btn {
-            color: #fff;
-            font-size: 1.2rem;
-            cursor: pointer;
-            background: rgba(255,255,255,0.1);
-            border: 1px solid var(--glass-border);
-            padding: 8px 20px;
-            border-radius: 10px;
-            font-family: 'Cairo', sans-serif;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
+    .btn-primary {
+      flex: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 13px 22px;
+      background: linear-gradient(135deg, var(--gold) 0%, #A07820 100%);
+      color: #06060A;
+      border: none;
+      border-radius: var(--radius-btn);
+      font-family: 'Cairo', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: filter .3s, transform .2s, box-shadow .3s;
+      will-change: filter;
+      position: relative;
+      overflow: hidden;
+    }
 
-        .close-btn:hover {
-            background: #cc0000;
-            border-color: #cc0000;
-            transform: scale(1.05);
-        }
+    .btn-primary::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,.25) 50%, transparent 70%);
+      transform: translateX(-120%);
+      transition: transform .55s ease;
+    }
 
-        .download-btn {
-            color: #000;
-            font-size: 1rem;
-            cursor: pointer;
-            background: var(--gold);
-            border: none;
-            padding: 8px 20px;
-            border-radius: 10px;
-            font-family: 'Cairo', sans-serif;
-            font-weight: 700;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-        }
+    .btn-primary:hover::after  { transform: translateX(120%); }
+    .btn-primary:hover {
+      filter: brightness(1.15);
+      box-shadow: 0 0 24px rgba(201,168,76,.35);
+      transform: translateY(-2px);
+    }
+    .btn-primary:active { transform: translateY(0) scale(.97); }
+    .btn-primary:focus-visible {
+      outline: 2px solid var(--gold-bright);
+      outline-offset: 3px;
+    }
 
-        .download-btn:hover {
-            background: #fff;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.5);
-        }
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 13px 20px;
+      background: transparent;
+      color: var(--gold);
+      border: 1px solid rgba(201,168,76,.3);
+      border-radius: var(--radius-btn);
+      font-family: 'Cairo', sans-serif;
+      font-weight: 600;
+      font-size: .95rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background .3s, border-color .3s, color .3s;
+      white-space: nowrap;
+    }
 
-        /* حاوية المحتوى */
-        .pdf-container {
-            width: 100%;
-            max-width: 1100px;
-            height: 80vh;
-            margin: 0 auto;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            border-radius: 15px;
-            overflow: hidden;
-            background: #111;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
-            position: relative;
-        }
+    .btn-ghost:hover {
+      background: rgba(201,168,76,.1);
+      border-color: var(--gold);
+      color: var(--gold-bright);
+    }
+    .btn-ghost:focus-visible {
+      outline: 2px solid var(--gold-bright);
+      outline-offset: 3px;
+    }
 
-        /* iframe */
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-            background: #fff;
-        }
+    /* ─────────── Modal Overlay ─────────── */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 900;
+      background: rgba(6,6,10,.88);
+      backdrop-filter: blur(14px) saturate(1.3);
+      display: grid;
+      place-items: center;
+      padding: 16px;
 
-        /* حالة التحميل */
-        .loader-overlay {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: #111;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 10;
-            transition: opacity 0.5s;
-        }
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .35s ease;
+    }
 
-        .loader-overlay.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
+    .modal-backdrop.open {
+      opacity: 1;
+      pointer-events: all;
+    }
 
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 3px solid rgba(212, 175, 55, 0.2);
-            border-top-color: var(--gold);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
+    .modal-shell {
+      width: 100%;
+      max-width: 1160px;
+      height: min(88svh, 820px);
+      background: var(--bg-surface);
+      border: 1px solid var(--gold-line);
+      border-radius: 24px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      box-shadow: 0 40px 100px rgba(0,0,0,.7), 0 0 0 1px rgba(201,168,76,.08);
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+      transform: scale(.95) translateY(20px);
+      transition: transform .4s var(--transition);
+    }
 
-        .loader-text {
-            font-family: 'Cairo', sans-serif;
-            color: var(--gold);
-            margin-top: 20px;
-            font-size: 1rem;
-        }
+    .modal-backdrop.open .modal-shell {
+      transform: scale(1) translateY(0);
+    }
 
-        /* رسالة الخطأ */
-        .error-fallback {
-            display: none;
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: #111;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 20;
-            padding: 40px;
-            text-align: center;
-        }
+    /* Modal top bar */
+    .modal-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--gold-line);
+      flex-shrink: 0;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
 
-        .error-fallback.active {
-            display: flex;
-        }
+    .modal-title {
+      font-family: 'Cairo', sans-serif;
+      font-size: 1.15rem;
+      color: var(--gold-bright);
+      font-weight: 600;
+    }
 
-        .error-icon {
-            font-size: 4rem;
-            margin-bottom: 20px;
-        }
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
 
-        .error-fallback h3 {
-            font-family: 'Cairo', sans-serif;
-            color: var(--error);
-            font-size: 1.5rem;
-            margin-bottom: 15px;
-        }
+    .modal-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 20px;
+      border-radius: 10px;
+      font-family: 'Cairo', sans-serif;
+      font-weight: 600;
+      font-size: .9rem;
+      cursor: pointer;
+      border: none;
+      text-decoration: none;
+      transition: background .25s, transform .2s;
+    }
 
-        .error-fallback p {
-            color: #999;
-            font-family: 'Cairo', sans-serif;
-            line-height: 1.8;
-            margin-bottom: 25px;
-            max-width: 500px;
-        }
+    .modal-btn-gold {
+      background: var(--gold);
+      color: #06060A;
+    }
+    .modal-btn-gold:hover { background: var(--gold-bright); transform: translateY(-1px); }
+    .modal-btn-gold:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; }
 
-        .error-actions {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
+    .modal-btn-outline {
+      background: transparent;
+      color: var(--text-soft);
+      border: 1px solid rgba(255,255,255,.12);
+    }
+    .modal-btn-outline:hover { border-color: var(--gold-line); color: var(--gold); }
 
-        .error-btn {
-            padding: 10px 25px;
-            border-radius: 50px;
-            font-family: 'Cairo', sans-serif;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: none;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
+    .modal-btn-close {
+      background: rgba(255,60,60,.1);
+      color: #ff7070;
+      border: 1px solid rgba(255,60,60,.2);
+      padding: 9px 16px;
+    }
+    .modal-btn-close:hover { background: rgba(200,40,40,.75); color: #fff; border-color: transparent; }
+    .modal-btn-close:focus-visible { outline: 2px solid #ff7070; outline-offset: 3px; }
 
-        .error-btn-primary {
-            background: var(--gold);
-            color: #000;
-        }
+    /* ─────────── Embed Area ─────────── */
+    .embed-area {
+      flex: 1;
+      position: relative;
+      overflow: hidden;
+      background: #111;
+    }
 
-        .error-btn-primary:hover {
-            background: #fff;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
-        }
+    .embed-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+      background: #fff;
+      display: block;
+    }
 
-        .error-btn-secondary {
-            background: transparent;
-            color: #fff;
-            border: 1px solid var(--glass-border);
-        }
+    /* ─────────── Loader ─────────── */
+    .embed-loader {
+      position: absolute;
+      inset: 0;
+      background: var(--bg-surface);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      z-index: 10;
+      transition: opacity .5s ease, visibility .5s ease;
+    }
 
-        .error-btn-secondary:hover {
-            border-color: var(--gold);
-            color: var(--gold);
-        }
+    .embed-loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
 
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            font-family: 'Cairo', sans-serif;
-            color: #555;
-            border-top: 1px solid var(--glass-border);
-            margin-top: 60px;
-            background: rgba(0,0,0,0.3);
-        }
+    .ring {
+      width: 52px;
+      height: 52px;
+      border: 2.5px solid rgba(201,168,76,.15);
+      border-top-color: var(--gold);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
 
-        footer p {
-            font-size: 0.95rem;
-        }
+    .ring::before {
+      content: "";
+      position: absolute;
+      inset: -7px;
+      border: 1.5px solid transparent;
+      border-bottom-color: rgba(201,168,76,.3);
+      border-radius: 50%;
+      animation: spin 2s linear infinite reverse;
+    }
 
-        /* Responsive */
-        @media (max-width: 768px) {
-            header h1 { font-size: 2.2rem; }
-            header p { font-size: 1rem; }
-            .main-container { grid-template-columns: 1fr; padding: 0 15px; }
-            .card { padding: 25px 20px; }
-            .card h2 { font-size: 1.8rem; }
-            .modal-header { flex-direction: column; gap: 15px; text-align: center; }
-            .pdf-container { height: 75vh; }
-            .modal-actions { width: 100%; justify-content: center; }
-        }
+    @keyframes spin { to { transform:rotate(360deg); } }
 
-        /* تأثيرات إضافية */
-        .fade-in-up {
-            animation: fadeInUp 0.6s ease forwards;
-            opacity: 0;
-            transform: translateY(30px);
-        }
+    .loader-label {
+      font-family: 'Cairo', sans-serif;
+      color: var(--gold);
+      font-size: 1rem;
+      letter-spacing: .05em;
+    }
 
-        @keyframes fadeInUp {
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    /* ─────────── Fallback State ─────────── */
+    .embed-fallback {
+      position: absolute;
+      inset: 0;
+      background: var(--bg-surface);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      z-index: 20;
+      padding: 32px;
+      text-align: center;
 
-        .card:nth-child(1) { animation-delay: 0.1s; }
-        .card:nth-child(2) { animation-delay: 0.2s; }
-        .card:nth-child(3) { animation-delay: 0.3s; }
-        .card:nth-child(4) { animation-delay: 0.4s; }
-        .card:nth-child(5) { animation-delay: 0.5s; }
-        .card:nth-child(6) { animation-delay: 0.6s; }
-        .card:nth-child(7) { animation-delay: 0.7s; }
-    </style>
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity .35s ease, visibility .35s ease;
+    }
+
+    .embed-fallback.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .fallback-icon {
+      font-size: 3.8rem;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%,100% { transform:translateY(0); }
+      50%      { transform:translateY(-8px); }
+    }
+
+    .fallback-title {
+      font-family: 'Cairo', sans-serif;
+      color: var(--text-main);
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .fallback-desc {
+      font-family: 'Cairo', sans-serif;
+      color: var(--text-soft);
+      font-size: 1rem;
+      line-height: 1.8;
+      max-width: 440px;
+    }
+
+    .fallback-btns {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 6px;
+    }
+
+    .fallback-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 14px 32px;
+      border-radius: var(--radius-btn);
+      font-family: 'Cairo', sans-serif;
+      font-weight: 700;
+      font-size: 1.05rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all .3s;
+      border: none;
+    }
+
+    .fallback-btn-primary {
+      background: linear-gradient(135deg, var(--gold) 0%, #9A6A10 100%);
+      color: #06060A;
+      box-shadow: 0 6px 24px rgba(201,168,76,.25);
+    }
+    .fallback-btn-primary:hover {
+      filter: brightness(1.15);
+      box-shadow: 0 0 32px rgba(201,168,76,.4);
+      transform: translateY(-3px);
+    }
+
+    .fallback-btn-secondary {
+      background: transparent;
+      color: var(--text-main);
+      border: 1px solid rgba(255,255,255,.15);
+    }
+    .fallback-btn-secondary:hover { border-color: var(--gold-line); color: var(--gold); }
+
+    /* ─────────── Footer ─────────── */
+    .site-footer {
+      text-align: center;
+      padding: clamp(32px,6vw,60px) 20px;
+      border-top: 1px solid rgba(201,168,76,.1);
+      font-family: 'Cairo', sans-serif;
+      color: var(--text-muted);
+      font-size: .88rem;
+      position: relative;
+    }
+
+    .site-footer::before {
+      content: "";
+      position: absolute;
+      top: -1px; left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    }
+
+    .footer-note {
+      margin-top: 6px;
+      font-size: .8rem;
+      color: #3e3b34;
+    }
+
+    /* ─────────── Reduced Motion ─────────── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .001ms !important;
+        transition-duration: .001ms !important;
+      }
+      .poem-card { opacity:1; translate:0; }
+    }
+
+    /* ─────────── Mobile ─────────── */
+    @media (max-width: 640px) {
+      .modal-bar { padding: 12px 16px; }
+      .modal-actions { gap: 8px; }
+      .modal-btn { padding: 8px 14px; font-size: .82rem; }
+      .btn-row { flex-direction: column; }
+      .btn-ghost, .btn-primary { width: 100%; }
+    }
+  </style>
 </head>
 <body>
 
-    <header>
-        <h1>ديوان المعلقات السبع</h1>
-        <div class="gold-divider"></div>
-        <p>عرض تفاعلي لأمهات القصائد العربية بإشراف وتطوير أسامة بن عمرو</p>
-    </header>
+  <!-- ─── Canvas for ambient particles ─── -->
+  <canvas id="stage" aria-hidden="true"></canvas>
 
-    <div class="main-container">
-        
-        <div class="card disabled-card fade-in-up">
-            <span class="coming-soon-badge">قريباً</span>
-            <h2>امرؤ القيس</h2>
-            <p class="later-text">تُرفع لاحقاً...</p>
-            <button class="view-btn btn-disabled" disabled>عرض المعلقة</button>
-        </div>
+  <!-- ─── Header ─── -->
+  <header class="site-header">
+    <span class="header-ornament" aria-hidden="true">۞  ﷽  ۞</span>
+    <h1 class="site-title">ديوان الحماسة</h1>
 
-        <div class="card fade-in-up">
-            <h2>طرفة بن العبد</h2>
-            <p>"لِخَولةَ أَطلالٌ بِبُرقَةِ ثَهمَدِ <br> تَلوحُ كَباقي الوَشمِ في ظاهِرِ اليَدِ"</p>
-            <button class="view-btn" onclick="openDriveFile('1J7jzhS5Mg3DpTu6ErLTVksgZuUUyxMcQ', 'معلقة طرفة بن العبد البكري')">
-                <span>📖</span> فتح المعلقة
-            </button>
-        </div>
+    <!-- Arabesque SVG divider -->
+    <svg class="divider-ornament" viewBox="0 0 260 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <line x1="0" y1="14" x2="80" y2="14" stroke="#C9A84C" stroke-width=".8" stroke-dasharray="3 4"/>
+      <path d="M90 14 C95 4, 107 4, 112 14 C117 24, 129 24, 130 14 C131 4, 143 4, 148 14 C153 24, 165 24, 170 14" stroke="#C9A84C" stroke-width="1.2" fill="none"/>
+      <circle cx="130" cy="14" r="4" fill="none" stroke="#C9A84C" stroke-width=".9"/>
+      <circle cx="130" cy="14" r="1.5" fill="#C9A84C"/>
+      <line x1="180" y1="14" x2="260" y2="14" stroke="#C9A84C" stroke-width=".8" stroke-dasharray="3 4"/>
+    </svg>
 
-        <div class="card disabled-card fade-in-up">
-            <span class="coming-soon-badge">قريباً</span>
-            <h2>زهير بن أبي سلمى</h2>
-            <p class="later-text">تُرفع لاحقاً...</p>
-            <button class="view-btn btn-disabled" disabled>عرض المعلقة</button>
-        </div>
+    <p class="site-subtitle">أمهات القصائد العربية — المعلقات السبع</p>
+    <p class="site-byline">إحياء وتطوير: أسامة بن عمرو</p>
+  </header>
 
-        <div class="card fade-in-up">
-            <h2>لبيد بن ربيعة</h2>
-            <p>"عَفَتِ الدِّيارُ مَحَلُّهَا فَمُقَامُهَا <br> بِمِنًى تَأَبَّدَ غَوْلُهَا فَرِجَامُهَا"</p>
-            <button class="view-btn" onclick="openDriveFile('1HXguIhIJBbYIZplennDC_zGgU9K-r7OQ', 'معلقة لبيد بن ربيعة العامري')">
-                <span>📖</span> فتح المعلقة
-            </button>
-        </div>
+  <!-- ─── Poems Grid ─── -->
+  <main>
+    <div class="grid" id="poemsGrid">
 
-        <div class="card disabled-card fade-in-up">
-            <span class="coming-soon-badge">قريباً</span>
-            <h2>عمرو بن كلثوم</h2>
-            <p class="later-text">تُرفع لاحقاً...</p>
-            <button class="view-btn btn-disabled" disabled>عرض المعلقة</button>
+      <article class="poem-card" data-index="١">
+        <span class="card-index" aria-hidden="true">١</span>
+        <h2 class="card-poet">امرؤ القيس</h2>
+        <p class="card-verse" lang="ar">
+          قِفا نَبكِ مِن ذِكرى حَبيبٍ وَمَنزِلِ<br>
+          بِسِقطِ اللِّوى بَينَ الدَّخولِ فَحَومَلِ
+        </p>
+        <div class="btn-row">
+          <button class="btn-primary" onclick="openPoem('1oGB64IcGOCGTSPtvoREZgb40u8gVRUXT','معلقة امرؤ القيس')">
+            📖 قراءة المعلقة
+          </button>
+          <a class="btn-ghost" href="https://drive.google.com/uc?export=download&id=1oGB64IcGOCGTSPtvoREZgb40u8gVRUXT" target="_blank" rel="noopener" aria-label="تحميل معلقة امرؤ القيس">
+            ⬇ تحميل
+          </a>
         </div>
+      </article>
 
-        <div class="card disabled-card fade-in-up">
-            <span class="coming-soon-badge">قريباً</span>
-            <h2>الحارث بن حلزة</h2>
-            <p class="later-text">تُرفع لاحقاً...</p>
-            <button class="view-btn btn-disabled" disabled>عرض المعلقة</button>
+      <article class="poem-card" data-index="٢">
+        <span class="card-index" aria-hidden="true">٢</span>
+        <h2 class="card-poet">طرفة بن العبد</h2>
+        <p class="card-verse" lang="ar">
+          لِخَولةَ أَطلالٌ بِبُرقَةِ ثَهمَدِ<br>
+          تَلوحُ كَباقي الوَشمِ في ظاهِرِ اليَدِ
+        </p>
+        <div class="btn-row">
+          <button class="btn-primary" onclick="openPoem('1Mn-PDGvmMEHGHNBcKvWUcB79IQA61fc7','معلقة طرفة بن العبد')">
+            📖 قراءة المعلقة
+          </button>
+          <a class="btn-ghost" href="https://drive.google.com/uc?export=download&id=1Mn-PDGvmMEHGHNBcKvWUcB79IQA61fc7" target="_blank" rel="noopener" aria-label="تحميل معلقة طرفة بن العبد">
+            ⬇ تحميل
+          </a>
         </div>
+      </article>
 
-        <div class="card disabled-card fade-in-up">
-            <span class="coming-soon-badge">قريباً</span>
-            <h2>عنترة بن شداد</h2>
-            <p class="later-text">تُرفع لاحقاً...</p>
-            <button class="view-btn btn-disabled" disabled>عرض المعلقة</button>
+      <article class="poem-card" data-index="٣">
+        <span class="card-index" aria-hidden="true">٣</span>
+        <h2 class="card-poet">زهير بن أبي سلمى</h2>
+        <p class="card-verse" lang="ar">
+          أَمِن أُمِّ أَوفى دِمنَةٌ لَم تَكَلَّمِ<br>
+          بِحَوْمانَةِ الدَّرَّاجِ فَالمُتَثَلَّمِ
+        </p>
+        <div class="btn-row">
+          <button class="btn-primary" onclick="openPoem('1AXGmLR67Yms6_L2URDoSF-nCyLTLpgFK','معلقة زهير بن أبي سلمى')">
+            📖 قراءة المعلقة
+          </button>
+          <a class="btn-ghost" href="https://drive.google.com/uc?export=download&id=1AXGmLR67Yms6_L2URDoSF-nCyLTLpgFK" target="_blank" rel="noopener" aria-label="تحميل معلقة زهير بن أبي سلمى">
+            ⬇ تحميل
+          </a>
         </div>
+      </article>
+
+      <article class="poem-card" data-index="٤">
+        <span class="card-index" aria-hidden="true">٤</span>
+        <h2 class="card-poet">عمرو بن كلثوم</h2>
+        <p class="card-verse" lang="ar">
+          أَلا هُبِّي بِصَحنِكِ فَاصبَحينا<br>
+          وَلا تُبقي خُمورَ الأَندَرينا
+        </p>
+        <div class="btn-row">
+          <button class="btn-primary" onclick="openPoem('1LYF1DkQZR1fbuOJerxaqCqivJtgYfb4y','معلقة عمرو بن كلثوم')">
+            📖 قراءة المعلقة
+          </button>
+          <a class="btn-ghost" href="https://drive.google.com/uc?export=download&id=1LYF1DkQZR1fbuOJerxaqCqivJtgYfb4y" target="_blank" rel="noopener" aria-label="تحميل معلقة عمرو بن كلثوم">
+            ⬇ تحميل
+          </a>
+        </div>
+      </article>
+
+      <article class="poem-card" data-index="٥">
+        <span class="card-index" aria-hidden="true">٥</span>
+        <h2 class="card-poet">لبيد بن ربيعة</h2>
+        <p class="card-verse" lang="ar">
+          عَفَتِ الدِّيارُ مَحَلُّها فَمُقامُها<br>
+          بِمِنىً تَأَبَّدَ غَوْلُها فَرِجامُها
+        </p>
+        <div class="btn-row">
+          <button class="btn-primary" onclick="openPoem('1OYFvqu-PXpfa2C8lhycZ-Xw15vja7rQ0','معلقة لبيد بن ربيعة')">
+            📖 قراءة المعلقة
+          </button>
+          <a class="btn-ghost" href="https://drive.google.com/uc?export=download&id=1OYFvqu-PXpfa2C8lhycZ-Xw15vja7rQ0" target="_blank" rel="noopener" aria-label="تحميل معلقة لبيد بن ربيعة">
+            ⬇ تحميل
+          </a>
+        </div>
+      </article>
+
+      <article class="poem-card" data-index="٦">
+        <span class="card-index" aria-hidden="true">٦</span>
+        <h2 class="card-poet">الحارث بن حلزة</h2>
+        <p class="card-verse" lang="ar">
+          آذَنَتنا بِبَينِها أَسماءُ<br>
+          رُبَّ ثاوٍ يُمَلُّ مِنهُ الثَّواءُ
+        </p>
+        <div class="btn-row">
+          <button class="btn-primary" onclick="openPoem('1bGSXtuc0k5dPDXSTTyw8ZCcz8O1WK_Xu','معلقة الحارث بن حلزة')">
+            📖 قراءة المعلقة
+          </button>
+          <a class="btn-ghost" href="https://drive.google.com/uc?export=download&id=1bGSXtuc0k5dPDXSTTyw8ZCcz8O1WK_Xu" target="_blank" rel="noopener" aria-label="تحميل معلقة الحارث بن حلزة">
+            ⬇ تحميل
+          </a>
+        </div>
+      </article>
+
+      <article class="poem-card" data-index="٧">
+        <span class="card-index" aria-hidden="true">٧</span>
+        <h2 class="card-poet">عنترة بن شداد</h2>
+        <p class="card-verse" lang="ar">
+          هَل غادَرَ الشُّعَراءُ مِن مُتَرَدَّمِ<br>
+          أَم هَل عَرَفتَ الدَّارَ بَعدَ تَوَهُّمِ
+        </p>
+        <div class="btn-row">
+          <button class="btn-primary" onclick="openPoem('1HAKrdlgYc8AkKiH8BRY9Sv3hNKYXEAY4','معلقة عنترة بن شداد')">
+            📖 قراءة المعلقة
+          </button>
+          <a class="btn-ghost" href="https://drive.google.com/uc?export=download&id=1HAKrdlgYc8AkKiH8BRY9Sv3hNKYXEAY4" target="_blank" rel="noopener" aria-label="تحميل معلقة عنترة بن شداد">
+            ⬇ تحميل
+          </a>
+        </div>
+      </article>
 
     </div>
+  </main>
 
-    <!-- النافذة المنبثقة المحسّنة -->
-    <div id="pdfModal" class="pdf-modal">
-        <div class="modal-header">
-            <div class="modal-title-group">
-                <h2 id="pdfTitle" style="color: var(--gold); margin:0; font-family:'Cairo', sans-serif; font-size:1.3rem;">عرض المعلقة</h2>
-            </div>
-            <div class="modal-actions">
-                <a id="downloadLink" href="#" target="_blank" class="download-btn" style="display:none;">
-                    <span>⬇️</span> تحميل الملف
-                </a>
-                <button class="close-btn" onclick="closePDF()">
-                    <span>✕</span> إغلاق
-                </button>
-            </div>
+  <!-- ─── Modal ─── -->
+  <div
+    id="modal"
+    class="modal-backdrop"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="modalTitle"
+    tabindex="-1"
+  >
+    <div class="modal-shell" id="modalShell">
+
+      <div class="modal-bar">
+        <span class="modal-title" id="modalTitle">📖 قراءة المعلقة</span>
+        <div class="modal-actions" id="modalActions">
+          <a id="btnDownload" href="#" target="_blank" rel="noopener" class="modal-btn modal-btn-gold">
+            ⬇ تحميل الملف
+          </a>
+          <a id="btnDrive" href="#" target="_blank" rel="noopener" class="modal-btn modal-btn-outline">
+            🌐 فتح في Drive
+          </a>
+          <button class="modal-btn modal-btn-close" id="btnClose" onclick="closePoem()">
+            ✕ إغلاق
+          </button>
         </div>
-        <div class="pdf-container">
-            <!-- Loader -->
-            <div id="loader" class="loader-overlay">
-                <div class="spinner"></div>
-                <div class="loader-text">جاري تحميل المعلقة...</div>
-            </div>
-            
-            <!-- iframe -->
-            <iframe id="pdfFrame" src=""></iframe>
-            
-            <!-- Fallback Error -->
-            <div id="errorFallback" class="error-fallback">
-                <div class="error-icon">🔒</div>
-                <h3>تعذر فتح الملف مباشرة</h3>
-                <p>
-                    المتصفح يمنع عرض هذا الملف داخل الموقع لأسباب أمنية.<br>
-                    يمكنك فتح الملف في تبويب جديد أو تحميله مباشرة.
-                </p>
-                <div class="error-actions">
-                    <a id="openNewTab" href="#" target="_blank" class="error-btn error-btn-primary">
-                        <span>🌐</span> فتح في تبويب جديد
-                    </a>
-                    <a id="downloadDirect" href="#" target="_blank" class="error-btn error-btn-secondary">
-                        <span>📥</span> تحميل الملف
-                    </a>
-                </div>
-            </div>
+      </div>
+
+      <div class="embed-area">
+        <!-- Loader -->
+        <div class="embed-loader" id="embedLoader">
+          <div class="ring"></div>
+          <span class="loader-label">جاري تحميل المعلقة…</span>
         </div>
+
+        <!-- iframe -->
+        <iframe
+          id="embedFrame"
+          class="embed-frame"
+          src=""
+          title="عرض المعلقة"
+          sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+          loading="lazy"
+        ></iframe>
+
+        <!-- Fallback -->
+        <div class="embed-fallback" id="embedFallback" role="alert">
+          <span class="fallback-icon" aria-hidden="true">🔒</span>
+          <h3 class="fallback-title">تعذّر العرض المباشر</h3>
+          <p class="fallback-desc">
+            المتصفح يمنع تضمين ملفات Drive لأسباب أمنية.<br>
+            استخدم أحد الخيارين أدناه للوصول إلى المعلقة كاملةً.
+          </p>
+          <div class="fallback-btns">
+            <a id="fallbackDrive" href="#" target="_blank" rel="noopener" class="fallback-btn fallback-btn-primary">
+              🌐 فتح في Google Drive
+            </a>
+            <a id="fallbackDownload" href="#" target="_blank" rel="noopener" class="fallback-btn fallback-btn-secondary">
+              📥 تحميل الملف
+            </a>
+          </div>
+        </div>
+      </div>
+
     </div>
+  </div>
 
-    <footer>
-        <p>حقوق التطوير والبرمجة محفوظة لأسامة بن عمرو © 2026</p>
-    </footer>
+  <!-- ─── Footer ─── -->
+  <footer class="site-footer">
+    <p>حقوق التطوير والبرمجة محفوظة لأسامة بن عمرو © 2026</p>
+    <p class="footer-note">ديوان الحماسة — المعلقات السبع — إحياء التراث العربي</p>
+  </footer>
 
-    <script>
-        // ======== إدارة النافذة المنبثقة ========
-        
-        let currentFileId = null;
-        let loadTimeout = null;
-        let isLoaded = false;
 
-        function openDriveFile(fileId, title) {
-            currentFileId = fileId;
-            const modal = document.getElementById('pdfModal');
-            const frame = document.getElementById('pdfFrame');
-            const titleEl = document.getElementById('pdfTitle');
-            const loader = document.getElementById('loader');
-            const errorFallback = document.getElementById('errorFallback');
-            
-            // روابط Google Drive
-            const previewUrl = `https://drive.google.com/file/d/${fileId}/preview`;
-            const viewUrl = `https://drive.google.com/file/d/${fileId}/view`;
-            const downloadUrl = `https://drive.google.com/uc?export=download&id=${fileId}`;
-            
-            // تحديث العنوان
-            titleEl.innerText = title;
-            
-            // إظهار الـ modal
-            modal.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-            
-            // إعادة تعيين الحالات
-            loader.classList.remove('hidden');
-            errorFallback.classList.remove('active');
-            frame.style.display = 'block';
-            isLoaded = false;
-            
-            // تحديث روابط الأزرار
-            document.getElementById('openNewTab').href = viewUrl;
-            document.getElementById('downloadDirect').href = downloadUrl;
-            document.getElementById('downloadLink').href = downloadUrl;
-            document.getElementById('downloadLink').style.display = 'inline-flex';
-            
-            // تعيين مصدر iframe
-            frame.src = previewUrl;
-            
-            // مؤقت للتحقق من التحميل (5 ثوانٍ)
-            loadTimeout = setTimeout(() => {
-                if (!isLoaded) {
-                    // إذا لم يتم التحميل، نفترض وجود مشكلة
-                    showErrorFallback();
-                }
-            }, 5000);
-            
-            // محاولة اكتشاف الخطأ في iframe
-            frame.onload = function() {
-                isLoaded = true;
-                loader.classList.add('hidden');
-                clearTimeout(loadTimeout);
-            };
-            
-            frame.onerror = function() {
-                showErrorFallback();
-            };
-        }
+  <script>
+  /* ────────────────────────────────────────────
+     Canvas Particles — Warm Gold Dust
+  ─────────────────────────────────────────── */
+  (function () {
+    const canvas = document.getElementById('stage');
+    const ctx    = canvas.getContext('2d');
+    let W, H, particles = [];
+    const COUNT = 55;
 
-        function showErrorFallback() {
-            const loader = document.getElementById('loader');
-            const errorFallback = document.getElementById('errorFallback');
-            const frame = document.getElementById('pdfFrame');
-            
-            loader.classList.add('hidden');
-            errorFallback.classList.add('active');
-            frame.style.display = 'none';
-        }
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
 
-        function closePDF() {
-            const modal = document.getElementById('pdfModal');
-            const frame = document.getElementById('pdfFrame');
-            const loader = document.getElementById('loader');
-            const errorFallback = document.getElementById('errorFallback');
-            
-            modal.style.display = 'none';
-            frame.src = '';
-            frame.style.display = 'block';
-            loader.classList.remove('hidden');
-            errorFallback.classList.remove('active');
-            document.body.style.overflow = 'auto';
-            
-            clearTimeout(loadTimeout);
-            currentFileId = null;
-            isLoaded = false;
-        }
+    function mkParticle() {
+      return {
+        x:    Math.random() * W,
+        y:    H + Math.random() * 60,
+        r:    1 + Math.random() * 2.2,
+        vx:   (Math.random() - .5) * .5,
+        vy:  -(0.25 + Math.random() * .7),
+        life: 0,
+        maxLife: 220 + Math.random() * 300,
+        hue:  38 + (Math.random() - .5) * 16,
+      };
+    }
 
-        // ======== إغلاق بـ ESC ========
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closePDF();
-            }
-        });
+    function init() {
+      resize();
+      for (let i = 0; i < COUNT; i++) {
+        const p = mkParticle();
+        p.y = Math.random() * H; // spread initial positions
+        p.life = Math.random() * p.maxLife;
+        particles.push(p);
+      }
+    }
 
-        // ======== إغلاق عند النقر خارج المحتوى ========
-        document.getElementById('pdfModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closePDF();
-            }
-        });
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
 
-        // ======== منع القائمة المنسدلة (اختياري) ========
-        document.addEventListener('contextmenu', function(e) {
-            if (e.target.closest('.pdf-container')) {
-                // يمكنك إلغاء التعليق للسماح بالقائمة
-                // e.preventDefault();
-            }
-        });
-    </script>
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        p.x += p.vx;
+        p.y += p.vy;
+        p.life++;
+
+        const t  = p.life / p.maxLife;
+        // Fade in then fade out
+        const a  = t < .15 ? t / .15 : t > .8 ? (1 - t) / .2 : 1;
+        const ca = Math.min(a, 1) * .55;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${p.hue}, 72%, 65%, ${ca})`;
+        ctx.fill();
+
+        if (p.life >= p.maxLife) particles[i] = mkParticle();
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', resize, { passive: true });
+    init();
+    draw();
+  })();
+
+
+  /* ────────────────────────────────────────────
+     Card Hover — Mouse-tracked Radial Gradient
+  ─────────────────────────────────────────── */
+  document.querySelectorAll('.poem-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const { left, top, width, height } = card.getBoundingClientRect();
+      const x = ((e.clientX - left) / width  * 100).toFixed(1);
+      const y = ((e.clientY - top)  / height * 100).toFixed(1);
+      card.style.setProperty('--mx', `${x}%`);
+      card.style.setProperty('--my', `${y}%`);
+    });
+  });
+
+
+  /* ────────────────────────────────────────────
+     Intersection Observer — Staggered Card Reveal
+  ─────────────────────────────────────────── */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (!entry.isIntersecting) return;
+      const card  = entry.target;
+      const index = [...document.querySelectorAll('.poem-card')].indexOf(card);
+      // stagger by position, not load order
+      card.style.animationDelay = `${index * 90}ms`;
+      card.classList.add('visible');
+      observer.unobserve(card);
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.poem-card').forEach(c => observer.observe(c));
+
+
+  /* ────────────────────────────────────────────
+     Modal State
+  ─────────────────────────────────────────── */
+  const modal        = document.getElementById('modal');
+  const embedFrame   = document.getElementById('embedFrame');
+  const embedLoader  = document.getElementById('embedLoader');
+  const embedFallback= document.getElementById('embedFallback');
+  const modalTitle   = document.getElementById('modalTitle');
+  const btnDownload  = document.getElementById('btnDownload');
+  const btnDrive     = document.getElementById('btnDrive');
+  const fallbackDrive= document.getElementById('fallbackDrive');
+  const fallbackDl   = document.getElementById('fallbackDownload');
+
+  let fallbackTimer  = null;
+  let lastOpener     = null; // to restore focus on close
+
+  function openPoem(fileId, rawTitle) {
+    // Sanitize: use textContent, never innerHTML, for user-provided strings
+    const safeTitle = rawTitle.replace(/[<>"'&]/g, c => ({'<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','&':'&amp;'}[c]));
+
+    const previewUrl  = `https://drive.google.com/file/d/${encodeURIComponent(fileId)}/preview`;
+    const viewUrl     = `https://drive.google.com/file/d/${encodeURIComponent(fileId)}/view?usp=sharing`;
+    const downloadUrl = `https://drive.google.com/uc?export=download&id=${encodeURIComponent(fileId)}`;
+
+    // Track opener for focus restoration
+    lastOpener = document.activeElement;
+
+    // Reset UI
+    embedLoader.classList.remove('hidden');
+    embedFallback.classList.remove('visible');
+    embedFrame.style.display = 'block';
+    embedFrame.src = '';
+
+    // Set safe title via textContent
+    modalTitle.textContent = '📖 ' + rawTitle;
+
+    // Set links (href is safe — Drive URLs are from our own code)
+    btnDownload.href  = downloadUrl;
+    btnDrive.href     = viewUrl;
+    fallbackDrive.href= viewUrl;
+    fallbackDl.href   = downloadUrl;
+
+    // Open modal, trap scroll
+    modal.classList.add('open');
+    document.body.style.overflow = 'hidden';
+
+    // Delay iframe src assignment one frame to avoid race
+    requestAnimationFrame(() => {
+      embedFrame.src = previewUrl;
+    });
+
+    // After 8s, if no load event fired, show fallback
+    fallbackTimer = setTimeout(() => showFallback(), 8000);
+
+    // Move focus into modal
+    setTimeout(() => document.getElementById('btnClose').focus(), 350);
+  }
+
+  embedFrame.addEventListener('load', function () {
+    clearTimeout(fallbackTimer);
+    // Google Drive preview fires load even when blocked by X-Frame-Options.
+    // We can't detect this via JS (cross-origin restriction).
+    // Best UX: hide loader and trust the iframe — if blank, user sees fallback links in toolbar.
+    embedLoader.classList.add('hidden');
+  });
+
+  embedFrame.addEventListener('error', showFallback);
+
+  function showFallback() {
+    clearTimeout(fallbackTimer);
+    embedLoader.classList.add('hidden');
+    embedFallback.classList.add('visible');
+    embedFrame.style.display = 'none';
+  }
+
+  function closePoem() {
+    modal.classList.remove('open');
+    document.body.style.overflow = '';
+
+    clearTimeout(fallbackTimer);
+
+    // Slight delay so close animation finishes before clearing
+    setTimeout(() => {
+      embedFrame.src = '';
+      embedLoader.classList.remove('hidden');
+      embedFallback.classList.remove('visible');
+      embedFrame.style.display = 'block';
+    }, 380);
+
+    // Restore focus
+    if (lastOpener) lastOpener.focus();
+  }
+
+
+  /* ────────────────────────────────────────────
+     Focus Trap inside Modal
+  ─────────────────────────────────────────── */
+  modal.addEventListener('keydown', e => {
+    if (!modal.classList.contains('open')) return;
+
+    if (e.key === 'Escape') {
+      closePoem();
+      return;
+    }
+
+    if (e.key !== 'Tab') return;
+
+    const focusable = [...modal.querySelectorAll(
+      'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+    )].filter(el => !el.closest('.embed-fallback:not(.visible)'));
+
+    if (!focusable.length) return;
+
+    const first = focusable[0];
+    const last  = focusable[focusable.length - 1];
+
+    if (e.shiftKey) {
+      if (document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      }
+    } else {
+      if (document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  });
+
+  // Click outside modal shell closes it
+  modal.addEventListener('pointerdown', e => {
+    if (e.target === modal) closePoem();
+  });
+
+  // Global ESC
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && modal.classList.contains('open')) closePoem();
+  });
+  </script>
+
 </body>
 </html>
