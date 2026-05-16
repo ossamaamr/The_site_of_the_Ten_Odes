@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="description" content="ديوان الحماسة — المعلقات السبع، أمهات القصائد العربية">
   <title>ديوان الحماسة | المعلقات السبع</title>
 
@@ -37,9 +37,10 @@
       scroll-behavior: smooth;
       scrollbar-width: thin;
       scrollbar-color: var(--gold-dim) var(--bg-surface);
+      -webkit-text-size-adjust: 100%;
     }
 
-    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar { width: 4px; }
     ::-webkit-scrollbar-track { background: var(--bg-surface); }
     ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
 
@@ -59,7 +60,7 @@
       pointer-events: none;
     }
 
-    /* ─────────── Noise Texture Overlay ─────────── */
+    /* ─────────── Noise/Glow Overlay ─────────── */
     body::before {
       content: "";
       position: fixed;
@@ -73,7 +74,7 @@
 
     /* ─────────── Header ─────────── */
     .site-header {
-      padding: clamp(50px,10vw,100px) 20px clamp(40px,7vw,70px);
+      padding: clamp(40px,8vw,90px) 20px clamp(32px,5vw,60px);
       text-align: center;
       position: relative;
       border-bottom: 1px solid var(--gold-line);
@@ -93,10 +94,10 @@
     .header-ornament {
       display: block;
       font-family: 'Scheherazade New', serif;
-      font-size: clamp(2rem,6vw,4rem);
+      font-size: clamp(1.6rem,5vw,3.5rem);
       color: var(--gold);
       opacity: .55;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       letter-spacing: .1em;
       animation: breathe 6s ease-in-out infinite;
     }
@@ -108,7 +109,7 @@
 
     .site-title {
       font-family: 'Scheherazade New', serif;
-      font-size: clamp(2.6rem,7vw,5.2rem);
+      font-size: clamp(2.2rem,7vw,5rem);
       font-weight: 700;
       color: var(--gold-bright);
       line-height: 1.1;
@@ -116,11 +117,10 @@
       text-shadow: 0 0 60px rgba(201,168,76,.3);
     }
 
-    /* Arabesque SVG divider */
     .divider-ornament {
       display: block;
-      margin: 22px auto;
-      width: 260px;
+      margin: 18px auto;
+      width: clamp(180px,60vw,260px);
       height: 28px;
       opacity: .6;
     }
@@ -128,7 +128,7 @@
     .site-subtitle {
       font-family: 'Cairo', sans-serif;
       color: var(--text-soft);
-      font-size: clamp(.95rem,2.5vw,1.25rem);
+      font-size: clamp(.85rem,2.2vw,1.2rem);
       font-weight: 300;
       letter-spacing: .06em;
       margin-top: 4px;
@@ -137,18 +137,18 @@
     .site-byline {
       font-family: 'Cairo', sans-serif;
       color: var(--text-muted);
-      font-size: .9rem;
-      margin-top: 10px;
+      font-size: clamp(.78rem,1.8vw,.9rem);
+      margin-top: 8px;
     }
 
     /* ─────────── Cards Grid ─────────── */
     .grid {
       max-width: 1380px;
-      margin: clamp(40px,8vw,80px) auto clamp(60px,10vw,120px);
-      padding: 0 clamp(16px,4vw,40px);
+      margin: clamp(32px,6vw,72px) auto clamp(50px,8vw,100px);
+      padding: 0 clamp(12px,4vw,40px);
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(min(100%,340px),1fr));
-      gap: clamp(20px,3vw,36px);
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+      gap: clamp(16px,2.5vw,32px);
     }
 
     /* ─────────── Single Card ─────────── */
@@ -156,15 +156,16 @@
       background: var(--bg-card);
       border: 1px solid var(--gold-line);
       border-radius: var(--radius-card);
-      padding: clamp(28px,4vw,44px) clamp(24px,3.5vw,38px);
+      padding: clamp(24px,3.5vw,40px) clamp(20px,3vw,34px);
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      align-items: center;       /* ← center all children */
+      gap: 18px;
       position: relative;
       overflow: hidden;
       cursor: default;
+      text-align: center;        /* ← center text */
 
-      /* GPU prep */
       will-change: transform, box-shadow;
       transform: translateY(0) scale(1);
       transition:
@@ -172,7 +173,6 @@
         box-shadow .5s var(--transition),
         border-color .4s ease;
 
-      /* Enter animation state */
       opacity: 0;
       translate: 0 32px;
     }
@@ -185,7 +185,7 @@
       to { opacity:1; translate:0 0; }
     }
 
-    /* Card background shimmer on hover */
+    /* shimmer */
     .poem-card::before {
       content: "";
       position: absolute;
@@ -199,21 +199,21 @@
     .poem-card:hover::before { opacity:1; }
 
     .poem-card:hover {
-      transform: translateY(-10px) scale(1.02);
+      transform: translateY(-8px) scale(1.015);
       border-color: rgba(201,168,76,.45);
       box-shadow:
-        0 28px 56px rgba(0,0,0,.45),
+        0 24px 48px rgba(0,0,0,.45),
         0 0 0 1px rgba(201,168,76,.15),
-        0 0 40px rgba(201,168,76,.08);
+        0 0 36px rgba(201,168,76,.08);
     }
 
     /* ordinal ghost number */
     .card-index {
       position: absolute;
-      top: 18px;
-      right: 22px;
+      top: 14px;
+      left: 18px;
       font-family: 'Scheherazade New', serif;
-      font-size: 3.8rem;
+      font-size: 3.2rem;
       font-weight: 700;
       color: rgba(201,168,76,.07);
       line-height: 1;
@@ -223,34 +223,36 @@
 
     .card-poet {
       font-family: 'Scheherazade New', serif;
-      font-size: clamp(1.9rem,4vw,2.5rem);
+      font-size: clamp(1.65rem,3.5vw,2.3rem);
       color: var(--gold-bright);
-      line-height: 1.15;
+      line-height: 1.2;
       position: relative;
       z-index: 1;
+      width: 100%;
+    }
+
+    /* gold underline beneath poet name */
+    .card-poet::after {
+      content: "";
+      display: block;
+      margin: 8px auto 0;
+      width: 50px;
+      height: 1.5px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      border-radius: 2px;
     }
 
     .card-verse {
       font-family: 'Amiri', serif;
       font-style: italic;
-      font-size: clamp(1.1rem,2.2vw,1.3rem);
+      font-size: clamp(1rem,1.9vw,1.2rem);
       color: var(--text-soft);
       line-height: 2.1;
       position: relative;
       z-index: 1;
       flex: 1;
-    }
-
-    /* right-border quote accent */
-    .card-verse::before {
-      content: "";
-      position: absolute;
-      top: 4px; bottom: 4px;
-      right: -20px;
-      width: 3px;
-      background: linear-gradient(180deg, transparent, var(--gold), transparent);
-      border-radius: 2px;
-      opacity: .4;
+      width: 100%;
+      padding: 0 4px;
     }
 
     /* ─────────── Buttons ─────────── */
@@ -259,27 +261,31 @@
       gap: 10px;
       position: relative;
       z-index: 1;
+      width: 100%;
+      justify-content: center;
     }
 
     .btn-primary {
       flex: 1;
+      max-width: 200px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      padding: 13px 22px;
+      gap: 7px;
+      padding: 12px 18px;
       background: linear-gradient(135deg, var(--gold) 0%, #A07820 100%);
       color: #06060A;
       border: none;
       border-radius: var(--radius-btn);
       font-family: 'Cairo', sans-serif;
       font-weight: 700;
-      font-size: 1rem;
+      font-size: clamp(.85rem,.9rem+.2vw,1rem);
       cursor: pointer;
       transition: filter .3s, transform .2s, box-shadow .3s;
       will-change: filter;
       position: relative;
       overflow: hidden;
+      white-space: nowrap;
     }
 
     .btn-primary::after {
@@ -291,31 +297,28 @@
       transition: transform .55s ease;
     }
 
-    .btn-primary:hover::after  { transform: translateX(120%); }
+    .btn-primary:hover::after { transform: translateX(120%); }
     .btn-primary:hover {
       filter: brightness(1.15);
-      box-shadow: 0 0 24px rgba(201,168,76,.35);
+      box-shadow: 0 0 22px rgba(201,168,76,.35);
       transform: translateY(-2px);
     }
     .btn-primary:active { transform: translateY(0) scale(.97); }
-    .btn-primary:focus-visible {
-      outline: 2px solid var(--gold-bright);
-      outline-offset: 3px;
-    }
+    .btn-primary:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; }
 
     .btn-ghost {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 6px;
-      padding: 13px 20px;
+      padding: 12px 18px;
       background: transparent;
       color: var(--gold);
       border: 1px solid rgba(201,168,76,.3);
       border-radius: var(--radius-btn);
       font-family: 'Cairo', sans-serif;
       font-weight: 600;
-      font-size: .95rem;
+      font-size: clamp(.8rem,.85rem,1rem);
       cursor: pointer;
       text-decoration: none;
       transition: background .3s, border-color .3s, color .3s;
@@ -327,21 +330,19 @@
       border-color: var(--gold);
       color: var(--gold-bright);
     }
-    .btn-ghost:focus-visible {
-      outline: 2px solid var(--gold-bright);
-      outline-offset: 3px;
-    }
+    .btn-ghost:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; }
 
     /* ─────────── Modal Overlay ─────────── */
     .modal-backdrop {
       position: fixed;
       inset: 0;
       z-index: 900;
-      background: rgba(6,6,10,.88);
+      background: rgba(6,6,10,.9);
       backdrop-filter: blur(14px) saturate(1.3);
+      -webkit-backdrop-filter: blur(14px) saturate(1.3);
       display: grid;
       place-items: center;
-      padding: 16px;
+      padding: clamp(8px,2vw,16px);
 
       opacity: 0;
       pointer-events: none;
@@ -356,10 +357,10 @@
     .modal-shell {
       width: 100%;
       max-width: 1160px;
-      height: min(88svh, 820px);
+      height: min(90svh, 820px);
       background: var(--bg-surface);
       border: 1px solid var(--gold-line);
-      border-radius: 24px;
+      border-radius: 20px;
       display: flex;
       flex-direction: column;
       overflow: hidden;
@@ -378,40 +379,47 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 16px 24px;
+      padding: clamp(10px,1.5vw,16px) clamp(12px,2vw,24px);
       border-bottom: 1px solid var(--gold-line);
       flex-shrink: 0;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
     }
 
     .modal-title {
       font-family: 'Cairo', sans-serif;
-      font-size: 1.15rem;
+      font-size: clamp(.9rem,1.2vw,1.15rem);
       color: var(--gold-bright);
       font-weight: 600;
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .modal-actions {
       display: flex;
-      gap: 10px;
+      gap: 8px;
       align-items: center;
       flex-wrap: wrap;
+      flex-shrink: 0;
     }
 
     .modal-btn {
       display: inline-flex;
       align-items: center;
-      gap: 7px;
-      padding: 9px 20px;
+      gap: 6px;
+      padding: clamp(7px,1vw,9px) clamp(12px,1.5vw,20px);
       border-radius: 10px;
       font-family: 'Cairo', sans-serif;
       font-weight: 600;
-      font-size: .9rem;
+      font-size: clamp(.78rem,.85rem,1rem);
       cursor: pointer;
       border: none;
       text-decoration: none;
       transition: background .25s, transform .2s;
+      white-space: nowrap;
     }
 
     .modal-btn-gold {
@@ -419,7 +427,6 @@
       color: #06060A;
     }
     .modal-btn-gold:hover { background: var(--gold-bright); transform: translateY(-1px); }
-    .modal-btn-gold:focus-visible { outline: 2px solid var(--gold-bright); outline-offset: 3px; }
 
     .modal-btn-outline {
       background: transparent;
@@ -432,7 +439,6 @@
       background: rgba(255,60,60,.1);
       color: #ff7070;
       border: 1px solid rgba(255,60,60,.2);
-      padding: 9px 16px;
     }
     .modal-btn-close:hover { background: rgba(200,40,40,.75); color: #fff; border-color: transparent; }
     .modal-btn-close:focus-visible { outline: 2px solid #ff7070; outline-offset: 3px; }
@@ -443,6 +449,7 @@
       position: relative;
       overflow: hidden;
       background: #111;
+      min-height: 0; /* critical for flex children */
     }
 
     .embed-frame {
@@ -473,12 +480,13 @@
     }
 
     .ring {
-      width: 52px;
-      height: 52px;
+      width: 48px;
+      height: 48px;
       border: 2.5px solid rgba(201,168,76,.15);
       border-top-color: var(--gold);
       border-radius: 50%;
       animation: spin 1s linear infinite;
+      position: relative;
     }
 
     .ring::before {
@@ -496,11 +504,11 @@
     .loader-label {
       font-family: 'Cairo', sans-serif;
       color: var(--gold);
-      font-size: 1rem;
+      font-size: clamp(.85rem,1vw,1rem);
       letter-spacing: .05em;
     }
 
-    /* ─────────── Fallback State ─────────── */
+    /* ─────────── Fallback ─────────── */
     .embed-fallback {
       position: absolute;
       inset: 0;
@@ -509,11 +517,10 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 18px;
+      gap: 16px;
       z-index: 20;
-      padding: 32px;
+      padding: clamp(20px,4vw,40px);
       text-align: center;
-
       opacity: 0;
       visibility: hidden;
       transition: opacity .35s ease, visibility .35s ease;
@@ -525,7 +532,7 @@
     }
 
     .fallback-icon {
-      font-size: 3.8rem;
+      font-size: clamp(2.5rem,6vw,3.8rem);
       animation: float 3s ease-in-out infinite;
     }
 
@@ -537,35 +544,35 @@
     .fallback-title {
       font-family: 'Cairo', sans-serif;
       color: var(--text-main);
-      font-size: 1.5rem;
+      font-size: clamp(1.1rem,2.5vw,1.5rem);
       font-weight: 600;
     }
 
     .fallback-desc {
       font-family: 'Cairo', sans-serif;
       color: var(--text-soft);
-      font-size: 1rem;
+      font-size: clamp(.85rem,1.5vw,1rem);
       line-height: 1.8;
       max-width: 440px;
     }
 
     .fallback-btns {
       display: flex;
-      gap: 14px;
+      gap: 12px;
       flex-wrap: wrap;
       justify-content: center;
-      margin-top: 6px;
+      margin-top: 4px;
     }
 
     .fallback-btn {
       display: inline-flex;
       align-items: center;
-      gap: 9px;
-      padding: 14px 32px;
+      gap: 8px;
+      padding: clamp(11px,1.5vw,14px) clamp(20px,3vw,32px);
       border-radius: var(--radius-btn);
       font-family: 'Cairo', sans-serif;
       font-weight: 700;
-      font-size: 1.05rem;
+      font-size: clamp(.85rem,1.5vw,1rem);
       cursor: pointer;
       text-decoration: none;
       transition: all .3s;
@@ -593,11 +600,11 @@
     /* ─────────── Footer ─────────── */
     .site-footer {
       text-align: center;
-      padding: clamp(32px,6vw,60px) 20px;
+      padding: clamp(28px,5vw,55px) 20px;
       border-top: 1px solid rgba(201,168,76,.1);
       font-family: 'Cairo', sans-serif;
       color: var(--text-muted);
-      font-size: .88rem;
+      font-size: clamp(.78rem,1.5vw,.88rem);
       position: relative;
     }
 
@@ -613,7 +620,7 @@
 
     .footer-note {
       margin-top: 6px;
-      font-size: .8rem;
+      font-size: clamp(.7rem,1.2vw,.8rem);
       color: #3e3b34;
     }
 
@@ -627,18 +634,83 @@
     }
 
     /* ─────────── Mobile ─────────── */
-    @media (max-width: 640px) {
-      .modal-bar { padding: 12px 16px; }
-      .modal-actions { gap: 8px; }
-      .modal-btn { padding: 8px 14px; font-size: .82rem; }
-      .btn-row { flex-direction: column; }
-      .btn-ghost, .btn-primary { width: 100%; }
+    @media (max-width: 480px) {
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        padding: 0 12px;
+      }
+
+      .poem-card {
+        padding: 22px 18px;
+      }
+
+      .btn-row {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .btn-primary,
+      .btn-ghost {
+        max-width: none;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .modal-bar {
+        padding: 10px 12px;
+        gap: 6px;
+      }
+
+      .modal-actions {
+        gap: 6px;
+      }
+
+      .modal-btn {
+        padding: 7px 10px;
+        font-size: .75rem;
+      }
+
+      .modal-shell {
+        height: min(95svh, 700px);
+        border-radius: 16px;
+      }
+
+      .site-header {
+        padding: 32px 16px 28px;
+      }
+
+      .fallback-btns {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .fallback-btn {
+        justify-content: center;
+      }
+    }
+
+    /* ─────────── Small Tablet ─────────── */
+    @media (min-width: 481px) and (max-width: 768px) {
+      .grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+      }
+    }
+
+    /* ─────────── Safe area for notched phones ─────────── */
+    @supports (padding: max(0px)) {
+      .site-header {
+        padding-top: max(40px, calc(40px + env(safe-area-inset-top)));
+      }
+      .site-footer {
+        padding-bottom: max(28px, calc(28px + env(safe-area-inset-bottom)));
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- ─── Canvas for ambient particles ─── -->
   <canvas id="stage" aria-hidden="true"></canvas>
 
   <!-- ─── Header ─── -->
@@ -646,7 +718,6 @@
     <span class="header-ornament" aria-hidden="true">۞  ﷽  ۞</span>
     <h1 class="site-title">ديوان الحماسة</h1>
 
-    <!-- Arabesque SVG divider -->
     <svg class="divider-ornament" viewBox="0 0 260 28" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <line x1="0" y1="14" x2="80" y2="14" stroke="#C9A84C" stroke-width=".8" stroke-dasharray="3 4"/>
       <path d="M90 14 C95 4, 107 4, 112 14 C117 24, 129 24, 130 14 C131 4, 143 4, 148 14 C153 24, 165 24, 170 14" stroke="#C9A84C" stroke-width="1.2" fill="none"/>
@@ -656,7 +727,7 @@
     </svg>
 
     <p class="site-subtitle">أمهات القصائد العربية — المعلقات السبع</p>
-    <p class="site-byline">إحياء وتطوير: أسامة بن عمرو</p>
+    <p class="site-byline">تطوير: أسامة بن عمرو السَّروجيُّ</p>
   </header>
 
   <!-- ─── Poems Grid ─── -->
@@ -733,7 +804,7 @@
 
       <article class="poem-card" data-index="٥">
         <span class="card-index" aria-hidden="true">٥</span>
-        <h2 class="card-poet">لبيد بن ربيعة</h2>
+        <h2 class="card-poet">لبيد بن ربيعة رضي الله  عنه</h2>
         <p class="card-verse" lang="ar">
           عَفَتِ الدِّيارُ مَحَلُّها فَمُقامُها<br>
           بِمِنىً تَأَبَّدَ غَوْلُها فَرِجامُها
@@ -750,23 +821,6 @@
 
       <article class="poem-card" data-index="٦">
         <span class="card-index" aria-hidden="true">٦</span>
-        <h2 class="card-poet">الحارث بن حلزة</h2>
-        <p class="card-verse" lang="ar">
-          آذَنَتنا بِبَينِها أَسماءُ<br>
-          رُبَّ ثاوٍ يُمَلُّ مِنهُ الثَّواءُ
-        </p>
-        <div class="btn-row">
-          <button class="btn-primary" onclick="openPoem('1bGSXtuc0k5dPDXSTTyw8ZCcz8O1WK_Xu','معلقة الحارث بن حلزة')">
-            📖 قراءة المعلقة
-          </button>
-          <a class="btn-ghost" href="https://drive.google.com/uc?export=download&id=1bGSXtuc0k5dPDXSTTyw8ZCcz8O1WK_Xu" target="_blank" rel="noopener" aria-label="تحميل معلقة الحارث بن حلزة">
-            ⬇ تحميل
-          </a>
-        </div>
-      </article>
-
-      <article class="poem-card" data-index="٧">
-        <span class="card-index" aria-hidden="true">٧</span>
         <h2 class="card-poet">عنترة بن شداد</h2>
         <p class="card-verse" lang="ar">
           هَل غادَرَ الشُّعَراءُ مِن مُتَرَدَّمِ<br>
@@ -777,6 +831,23 @@
             📖 قراءة المعلقة
           </button>
           <a class="btn-ghost" href="https://drive.google.com/uc?export=download&id=1HAKrdlgYc8AkKiH8BRY9Sv3hNKYXEAY4" target="_blank" rel="noopener" aria-label="تحميل معلقة عنترة بن شداد">
+            ⬇ تحميل
+          </a>
+        </div>
+      </article>
+
+      <article class="poem-card" data-index="٧">
+        <span class="card-index" aria-hidden="true">٧</span>
+        <h2 class="card-poet">الحارث بن حلزة</h2>
+        <p class="card-verse" lang="ar">
+          آذَنَتنا بِبَينِها أَسماءُ<br>
+          رُبَّ ثاوٍ يُمَلُّ مِنهُ الثَّواءُ
+        </p>
+        <div class="btn-row">
+          <button class="btn-primary" onclick="openPoem('1bGSXtuc0k5dPDXSTTyw8ZCcz8O1WK_Xu','معلقة الحارث بن حلزة')">
+            📖 قراءة المعلقة
+          </button>
+          <a class="btn-ghost" href="https://drive.google.com/uc?export=download&id=1bGSXtuc0k5dPDXSTTyw8ZCcz8O1WK_Xu" target="_blank" rel="noopener" aria-label="تحميل معلقة الحارث بن حلزة">
             ⬇ تحميل
           </a>
         </div>
@@ -798,12 +869,12 @@
 
       <div class="modal-bar">
         <span class="modal-title" id="modalTitle">📖 قراءة المعلقة</span>
-        <div class="modal-actions" id="modalActions">
+        <div class="modal-actions">
           <a id="btnDownload" href="#" target="_blank" rel="noopener" class="modal-btn modal-btn-gold">
-            ⬇ تحميل الملف
+            ⬇ تحميل
           </a>
           <a id="btnDrive" href="#" target="_blank" rel="noopener" class="modal-btn modal-btn-outline">
-            🌐 فتح في Drive
+            🌐 Drive
           </a>
           <button class="modal-btn modal-btn-close" id="btnClose" onclick="closePoem()">
             ✕ إغلاق
@@ -812,23 +883,20 @@
       </div>
 
       <div class="embed-area">
-        <!-- Loader -->
         <div class="embed-loader" id="embedLoader">
           <div class="ring"></div>
           <span class="loader-label">جاري تحميل المعلقة…</span>
         </div>
 
-        <!-- iframe -->
         <iframe
           id="embedFrame"
           class="embed-frame"
           src=""
           title="عرض المعلقة"
-          sandbox="allow-scripts allow-same-origin allow-popups allow-forms"
+          allow="autoplay"
           loading="lazy"
         ></iframe>
 
-        <!-- Fallback -->
         <div class="embed-fallback" id="embedFallback" role="alert">
           <span class="fallback-icon" aria-hidden="true">🔒</span>
           <h3 class="fallback-title">تعذّر العرض المباشر</h3>
@@ -864,8 +932,9 @@
   (function () {
     const canvas = document.getElementById('stage');
     const ctx    = canvas.getContext('2d');
-    let W, H, particles = [];
-    const COUNT = 55;
+    let W, H;
+    const particles = [];
+    const COUNT = 45;
 
     function resize() {
       W = canvas.width  = window.innerWidth;
@@ -874,14 +943,14 @@
 
     function mkParticle() {
       return {
-        x:    Math.random() * W,
-        y:    H + Math.random() * 60,
-        r:    1 + Math.random() * 2.2,
-        vx:   (Math.random() - .5) * .5,
-        vy:  -(0.25 + Math.random() * .7),
-        life: 0,
-        maxLife: 220 + Math.random() * 300,
-        hue:  38 + (Math.random() - .5) * 16,
+        x:       Math.random() * W,
+        y:       H + Math.random() * 60,
+        r:       .8 + Math.random() * 2,
+        vx:      (Math.random() - .5) * .4,
+        vy:     -(0.2 + Math.random() * .6),
+        life:    0,
+        maxLife: 200 + Math.random() * 280,
+        hue:     38 + (Math.random() - .5) * 16,
       };
     }
 
@@ -889,7 +958,7 @@
       resize();
       for (let i = 0; i < COUNT; i++) {
         const p = mkParticle();
-        p.y = Math.random() * H; // spread initial positions
+        p.y    = Math.random() * H;
         p.life = Math.random() * p.maxLife;
         particles.push(p);
       }
@@ -897,7 +966,6 @@
 
     function draw() {
       ctx.clearRect(0, 0, W, H);
-
       for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i];
         p.x += p.vx;
@@ -905,18 +973,14 @@
         p.life++;
 
         const t  = p.life / p.maxLife;
-        // Fade in then fade out
         const a  = t < .15 ? t / .15 : t > .8 ? (1 - t) / .2 : 1;
-        const ca = Math.min(a, 1) * .55;
-
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `hsla(${p.hue}, 72%, 65%, ${ca})`;
+        ctx.fillStyle = `hsla(${p.hue}, 72%, 65%, ${Math.min(a,.55)})`;
         ctx.fill();
 
         if (p.life >= p.maxLife) particles[i] = mkParticle();
       }
-
       requestAnimationFrame(draw);
     }
 
@@ -927,100 +991,91 @@
 
 
   /* ────────────────────────────────────────────
-     Card Hover — Mouse-tracked Radial Gradient
+     Card Mouse-tracked Glow
   ─────────────────────────────────────────── */
   document.querySelectorAll('.poem-card').forEach(card => {
     card.addEventListener('mousemove', e => {
       const { left, top, width, height } = card.getBoundingClientRect();
-      const x = ((e.clientX - left) / width  * 100).toFixed(1);
-      const y = ((e.clientY - top)  / height * 100).toFixed(1);
-      card.style.setProperty('--mx', `${x}%`);
-      card.style.setProperty('--my', `${y}%`);
+      card.style.setProperty('--mx', `${((e.clientX - left) / width  * 100).toFixed(1)}%`);
+      card.style.setProperty('--my', `${((e.clientY - top)  / height * 100).toFixed(1)}%`);
     });
   });
 
 
   /* ────────────────────────────────────────────
-     Intersection Observer — Staggered Card Reveal
+     Staggered Card Reveal
   ─────────────────────────────────────────── */
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (!entry.isIntersecting) return;
-      const card  = entry.target;
-      const index = [...document.querySelectorAll('.poem-card')].indexOf(card);
-      // stagger by position, not load order
-      card.style.animationDelay = `${index * 90}ms`;
-      card.classList.add('visible');
-      observer.unobserve(card);
-    });
-  }, { threshold: 0.08 });
+  const allCards = [...document.querySelectorAll('.poem-card')];
 
-  document.querySelectorAll('.poem-card').forEach(c => observer.observe(c));
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const idx = allCards.indexOf(entry.target);
+      entry.target.style.animationDelay = `${idx * 85}ms`;
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    });
+  }, { threshold: 0.06 });
+
+  allCards.forEach(c => observer.observe(c));
 
 
   /* ────────────────────────────────────────────
-     Modal State
+     Modal Logic
   ─────────────────────────────────────────── */
-  const modal        = document.getElementById('modal');
-  const embedFrame   = document.getElementById('embedFrame');
-  const embedLoader  = document.getElementById('embedLoader');
-  const embedFallback= document.getElementById('embedFallback');
-  const modalTitle   = document.getElementById('modalTitle');
-  const btnDownload  = document.getElementById('btnDownload');
-  const btnDrive     = document.getElementById('btnDrive');
-  const fallbackDrive= document.getElementById('fallbackDrive');
-  const fallbackDl   = document.getElementById('fallbackDownload');
+  const modal         = document.getElementById('modal');
+  const embedFrame    = document.getElementById('embedFrame');
+  const embedLoader   = document.getElementById('embedLoader');
+  const embedFallback = document.getElementById('embedFallback');
+  const modalTitle    = document.getElementById('modalTitle');
+  const btnDownload   = document.getElementById('btnDownload');
+  const btnDrive      = document.getElementById('btnDrive');
+  const fallbackDrive = document.getElementById('fallbackDrive');
+  const fallbackDl    = document.getElementById('fallbackDownload');
 
-  let fallbackTimer  = null;
-  let lastOpener     = null; // to restore focus on close
+  let fallbackTimer = null;
+  let lastOpener    = null;
 
   function openPoem(fileId, rawTitle) {
-    // Sanitize: use textContent, never innerHTML, for user-provided strings
-    const safeTitle = rawTitle.replace(/[<>"'&]/g, c => ({'<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','&':'&amp;'}[c]));
-
-    const previewUrl  = `https://drive.google.com/file/d/${encodeURIComponent(fileId)}/preview`;
+    // Build URLs — Google Drive /preview is the canonical embeddable format
+    // The ?rm=minimal param strips Drive chrome for a cleaner view
+    const previewUrl  = `https://drive.google.com/file/d/${encodeURIComponent(fileId)}/preview?rm=minimal`;
     const viewUrl     = `https://drive.google.com/file/d/${encodeURIComponent(fileId)}/view?usp=sharing`;
     const downloadUrl = `https://drive.google.com/uc?export=download&id=${encodeURIComponent(fileId)}`;
 
-    // Track opener for focus restoration
     lastOpener = document.activeElement;
 
-    // Reset UI
+    // Reset state
     embedLoader.classList.remove('hidden');
     embedFallback.classList.remove('visible');
     embedFrame.style.display = 'block';
     embedFrame.src = '';
 
-    // Set safe title via textContent
-    modalTitle.textContent = '📖 ' + rawTitle;
+    modalTitle.textContent  = '📖 ' + rawTitle;
+    btnDownload.href         = downloadUrl;
+    btnDrive.href            = viewUrl;
+    fallbackDrive.href       = viewUrl;
+    fallbackDl.href          = downloadUrl;
 
-    // Set links (href is safe — Drive URLs are from our own code)
-    btnDownload.href  = downloadUrl;
-    btnDrive.href     = viewUrl;
-    fallbackDrive.href= viewUrl;
-    fallbackDl.href   = downloadUrl;
-
-    // Open modal, trap scroll
     modal.classList.add('open');
     document.body.style.overflow = 'hidden';
 
-    // Delay iframe src assignment one frame to avoid race
+    // Assign src on next tick to prevent race condition
     requestAnimationFrame(() => {
       embedFrame.src = previewUrl;
     });
 
-    // After 8s, if no load event fired, show fallback
-    fallbackTimer = setTimeout(() => showFallback(), 8000);
+    // Google Drive /preview can silently render a blank page on private files.
+    // 12-second timeout gives it enough time even on slow connections.
+    fallbackTimer = setTimeout(showFallback, 12000);
 
-    // Move focus into modal
     setTimeout(() => document.getElementById('btnClose').focus(), 350);
   }
 
-  embedFrame.addEventListener('load', function () {
+  embedFrame.addEventListener('load', () => {
+    // Can't detect silent X-Frame-Options block (cross-origin), but at minimum
+    // we hide the spinner — the toolbar links remain always visible.
     clearTimeout(fallbackTimer);
-    // Google Drive preview fires load even when blocked by X-Frame-Options.
-    // We can't detect this via JS (cross-origin restriction).
-    // Best UX: hide loader and trust the iframe — if blank, user sees fallback links in toolbar.
     embedLoader.classList.add('hidden');
   });
 
@@ -1036,10 +1091,8 @@
   function closePoem() {
     modal.classList.remove('open');
     document.body.style.overflow = '';
-
     clearTimeout(fallbackTimer);
 
-    // Slight delay so close animation finishes before clearing
     setTimeout(() => {
       embedFrame.src = '';
       embedLoader.classList.remove('hidden');
@@ -1047,22 +1100,17 @@
       embedFrame.style.display = 'block';
     }, 380);
 
-    // Restore focus
     if (lastOpener) lastOpener.focus();
   }
 
 
   /* ────────────────────────────────────────────
-     Focus Trap inside Modal
+     Focus Trap + Keyboard Navigation
   ─────────────────────────────────────────── */
   modal.addEventListener('keydown', e => {
     if (!modal.classList.contains('open')) return;
 
-    if (e.key === 'Escape') {
-      closePoem();
-      return;
-    }
-
+    if (e.key === 'Escape') { closePoem(); return; }
     if (e.key !== 'Tab') return;
 
     const focusable = [...modal.querySelectorAll(
@@ -1070,29 +1118,20 @@
     )].filter(el => !el.closest('.embed-fallback:not(.visible)'));
 
     if (!focusable.length) return;
-
     const first = focusable[0];
     const last  = focusable[focusable.length - 1];
 
     if (e.shiftKey) {
-      if (document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      }
+      if (document.activeElement === first) { e.preventDefault(); last.focus(); }
     } else {
-      if (document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
+      if (document.activeElement === last)  { e.preventDefault(); first.focus(); }
     }
   });
 
-  // Click outside modal shell closes it
   modal.addEventListener('pointerdown', e => {
     if (e.target === modal) closePoem();
   });
 
-  // Global ESC
   document.addEventListener('keydown', e => {
     if (e.key === 'Escape' && modal.classList.contains('open')) closePoem();
   });
